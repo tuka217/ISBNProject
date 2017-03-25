@@ -17,7 +17,8 @@ import weeia.isbnapp.client.GoodreadsClient;
 import weeia.isbnapp.model.GoodreadsResponse;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    private String API_BASE_URL = "https://www.goodreads.com/book/";
+    private String API_BASE_URL_BY_ISBN = "https://www.goodreads.com/book/";
+    private String API_BASE_URL_BY_TITLE = "https://www.goodreads.com/book/";
     private Button getDataButton;
     private EditText lookForEditText ;
     private EditText temporaryEditText ;
@@ -34,12 +35,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View arg0) {
-        final ProgressDialog dialog = ProgressDialog.show(this, "", "loading...");
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
 
         Retrofit.Builder builder =
             new Retrofit.Builder()
-                    .baseUrl(API_BASE_URL)
+                    .baseUrl(API_BASE_URL_BY_ISBN)
                     .addConverterFactory(
                             SimpleXmlConverterFactory.create()
                     );
@@ -53,8 +53,40 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         GoodreadsClient client =  retrofit.create(GoodreadsClient.class);
 
+        if(lookForEditText.getText().toString().matches("^(?=.*[0-9])$")) {
+            getByISBN(client);
+        } else {
+            getByTitle(client);
+        }
+    }
+
+    private void getByISBN(GoodreadsClient client)
+    {
+        final ProgressDialog dialog = ProgressDialog.show(this, "", "loading...");
         //"0441172717"
         Call<GoodreadsResponse> call = client.bookByISBN(lookForEditText.getText().toString(), "ylU5p7gcPnQEnLvhJlWYQ", "xml");
+
+        call.enqueue(new Callback<GoodreadsResponse>() {
+            @Override
+            public void onResponse(Call<GoodreadsResponse> call, Response<GoodreadsResponse> response) {
+                dialog.dismiss();
+                GoodreadsResponse goodreadsResponse = response.body();
+                temporaryEditText.setText(goodreadsResponse.getBook().getDescription());
+            }
+
+            @Override
+            public void onFailure(Call<GoodreadsResponse> call, Throwable t) {
+                dialog.dismiss();
+                temporaryEditText.setText("Error while receiving data");
+            }
+        });
+    }
+
+    private void getByTitle(GoodreadsClient client)
+    {
+        final ProgressDialog dialog = ProgressDialog.show(this, "", "loading...");
+        //The Hound of the Baskervilles
+        Call<GoodreadsResponse> call = client.bookByTitle("ylU5p7gcPnQEnLvhJlWYQ", "xml", lookForEditText.getText().toString(), null);
 
         call.enqueue(new Callback<GoodreadsResponse>() {
             @Override

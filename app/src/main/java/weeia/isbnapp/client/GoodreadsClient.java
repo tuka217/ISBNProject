@@ -18,4 +18,12 @@ public interface GoodreadsClient {
            @Query("key") String key,
            @Query("format") String format
     );
+
+    @GET("title.xml")
+    Call<GoodreadsResponse> bookByTitle(
+            @Query("key") String key,
+            @Query("format") String format,
+            @Query("title") String title,
+            @Query("author") String author
+    );
 }
