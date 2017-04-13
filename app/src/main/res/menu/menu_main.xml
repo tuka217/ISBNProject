@@ -1,7 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="weeia.bookproject.MainActivity">
+    tools:context="weeia.isbnapp.MainActivity">
     <item
         android:id="@+id/action_library"
         android:orderInCategory="100"

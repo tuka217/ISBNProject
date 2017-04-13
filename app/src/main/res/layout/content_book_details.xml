@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="weeia.bookproject.BookDetailsActivity"
+    tools:context="weeia.isbnapp.BookDetailsActivity"
     tools:showIn="@layout/activity_book_details">
 
     <android.support.design.widget.TabLayout
