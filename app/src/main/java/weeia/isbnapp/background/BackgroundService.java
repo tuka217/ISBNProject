@@ -23,7 +23,7 @@ import weeia.isbnapp.api.Offers;
 public class BackgroundService extends IntentService {
 
     private ResultReceiver resultReceiver;
-
+    public static final String RECEIVE_JSON = "com.your.package.RECEIVE_JSON";
     public BackgroundService() {
         super("BackgroundService");
     }
@@ -44,7 +44,7 @@ public class BackgroundService extends IntentService {
         try {
             Response<Offers> result = call.execute();
 
-            Intent RTReturn = new Intent(MainActivity.RECEIVE_JSON);
+            Intent RTReturn = new Intent(RECEIVE_JSON);
             RTReturn.putExtra("json", result.body());
 
             LocalBroadcastManager.getInstance(this).sendBroadcast(RTReturn);
