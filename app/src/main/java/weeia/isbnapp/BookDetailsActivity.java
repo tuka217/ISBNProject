@@ -32,7 +32,7 @@ public class BookDetailsActivity extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         tabLayout.addTab(tabLayout.newTab().setText("Informacje"));
         tabLayout.addTab(tabLayout.newTab().setText("Opinie"));
-        tabLayout.addTab(tabLayout.newTab().setText("Ceny"));
+        tabLayout.addTab(tabLayout.newTab().setText("Oferty"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
