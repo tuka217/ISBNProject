@@ -2,25 +2,22 @@ package weeia.isbnapp;
 
 import android.util.Log;
 import org.json.JSONArray;
-import java.io.IOException;
 import java.net.MalformedURLException;
-import java.net.URL;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class JsonParser {
-    public JsonParser() {}
+class JsonParser
+{
 
-    public JSONArray parseJsonArray(String url) throws MalformedURLException {
-        URL urlObj = new URL(url);
+    public JsonParser() {
+    }
+
+    public JSONArray parseJsonArray(String jsonArray) throws MalformedURLException {
         JSONArray jarray=null;
         try {
-            String result = CustomHttpClient.getPageFromUrl(urlObj);
-            jarray = new JSONArray(result);
+            jarray = new JSONArray(jsonArray);
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        }  catch (JSONException e) {
             Log.e("JSON Parser", "Error parsing data " + e.toString());
         }
         catch (Exception ex){
@@ -29,16 +26,12 @@ public class JsonParser {
         return jarray;
     }
 
-    public JSONObject parseJsonObject(String url) throws MalformedURLException {
-        URL urlObj = new URL(url);
+    public JSONObject parseJsonObject(String jsonObject) throws MalformedURLException {
         JSONObject jObject = null;
         try {
-            String result = CustomHttpClient.getPageFromUrl(urlObj);
-            jObject = new JSONObject(result);
+            jObject = new JSONObject(jsonObject);
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        }  catch (JSONException e) {
             Log.e("JSON Parser", "Error parsing data " + e.toString());
         }
         catch (Exception ex){

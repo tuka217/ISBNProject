@@ -2,11 +2,16 @@ package weeia.isbnapp;
 
 import android.os.AsyncTask;
 import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
-public class OpinionsPresenter implements   IOpinionsPresenter {
+import weeia.isbnapp.LbModels.BookDetailsDto;
+import weeia.isbnapp.LbModels.BookInfoLbDto;
+import weeia.isbnapp.LbModels.BookOpinionOpinionsPresenterDto;
+import weeia.isbnapp.LbModels.BookGeneralInfo;
 
+public class OpinionsPresenter implements   IOpinionsPresenter {
 
     @Override
     public BookInfoLbDto ProvideOpinions(String bookName) throws ExecutionException, InterruptedException, MalformedURLException {
@@ -14,29 +19,33 @@ public class OpinionsPresenter implements   IOpinionsPresenter {
                 .AnSuggesionUrl()
                 .WithBookName(bookName)
                 .Build();
-        return new GetLbDataTask().execute(url).get();
+        return new GetLbDataTask().execute(url,bookName).get();
     }
 
     class GetLbDataTask extends AsyncTask<String, Void, BookInfoLbDto> {
 
-        protected BookInfoLbDto doInBackground(String... urls) {
+        protected BookInfoLbDto doInBackground(String... params) {
             BookInfoLbDto bookInfoLbDto = new BookInfoLbDto();
                 try {
                     ArrayList<BookOpinionOpinionsPresenterDto> bookOpinions = new ArrayList<>();
-                    LubimyCzytacHttpResponseParser client = new LubimyCzytacHttpResponseParser();
-                    String bookId = client.GetBookId(urls[0]);
+                    IContentProvider contentProvider = new CustomHttpClient(new URL(params[0]));
+                    LubimyCzytacContentParser lbContentParser = new LubimyCzytacContentParser();
 
-                    double bookRate = client.GetBookRate(new LbUrlBuilder()
+                    BookGeneralInfo bookSmallInfoTemp = lbContentParser.GetBookInfo(contentProvider,params[1]);
+                    contentProvider  = new CustomHttpClient(new URL(new LbUrlBuilder()
                             .ADetailBookPageUrl()
-                            .WithBookId(bookId)
-                            .Build());
+                            .WithBookId(bookSmallInfoTemp.id)
+                            .Build()));
 
-                    bookOpinions.addAll(client.GetBookOpinions(new LbUrlBuilder()
+                    BookDetailsDto bookDetails = lbContentParser.GetBookDetails(contentProvider);
+                    contentProvider = new CustomHttpClient(new URL(new LbUrlBuilder()
                             .ABookReviewUrl()
-                            .WithBookId(bookId)
+                            .WithBookId(bookSmallInfoTemp.id)
                             .WithReviewCount("10")
                             .Build()));
-                    bookInfoLbDto = new BookInfoLbDto(bookId, bookOpinions, bookRate);
+                    bookOpinions.addAll(lbContentParser.GetBookOpinions(contentProvider));
+
+                    bookInfoLbDto = new BookInfoLbDto(bookOpinions, bookDetails);
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 } catch (Exception e) {
