@@ -1,4 +1,4 @@
-package weeia.isbnapp.api;
+package weeia.isbnapp.book.offers.allegro.api;
 
 /**
  * Created by Anna on 2017-04-07.

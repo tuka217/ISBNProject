@@ -1,4 +1,4 @@
-package weeia.isbnapp;
+package weeia.isbnapp.activities;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

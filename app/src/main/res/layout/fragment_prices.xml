@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="weeia.isbnapp.PricesFragment">
+    tools:context="weeia.isbnapp.activities.PricesFragment">
 
     <!-- TODO: Update blank fragment layout -->
 

@@ -4,7 +4,7 @@
     android:id="@+id/info_fragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="weeia.isbnapp.InformationFragment">
+    tools:context="weeia.isbnapp.activities.InformationFragment">
 
     <!-- TODO: Update blank fragment layout -->
 
@@ -45,7 +45,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Wszystkie wojny Lary"
                     android:textAppearance="@android:style/TextAppearance.Material.Medium"
                     android:textColor="?android:attr/textColorPrimary" />
             </LinearLayout>
@@ -67,7 +66,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Wojciech Jagielski"
                     android:textAppearance="@android:style/TextAppearance.Material.Medium"
                     android:textColor="?android:attr/textColorPrimary" />
             </LinearLayout>
@@ -89,7 +87,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="polski"
                     android:textAppearance="@android:style/TextAppearance.Material.Medium"
                     android:textColor="?android:attr/textColorPrimary" />
             </LinearLayout>
@@ -111,7 +108,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="2015"
                     android:textAppearance="@android:style/TextAppearance.Material.Medium"
                     android:textColor="?android:attr/textColorPrimary" />
             </LinearLayout>
@@ -133,7 +129,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Literatura piękna"
                     android:textAppearance="@android:style/TextAppearance.Material.Medium"
                     android:textColor="?android:attr/textColorPrimary" />
             </LinearLayout>
@@ -155,7 +150,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="literatura faktu"
                     android:textAppearance="@android:style/TextAppearance.Material.Medium"
                     android:textColor="?android:attr/textColorPrimary" />
             </LinearLayout>
@@ -177,7 +171,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="reportaż / zbiór reportaży"
                     android:textAppearance="@android:style/TextAppearance.Material.Medium"
                     android:textColor="?android:attr/textColorPrimary" />
 
@@ -194,10 +187,6 @@
                 android:id="@+id/publisher_note"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Opowieści słuchamy z ust Lary. Jej synowie, gruzińscy Czeczeni, ruszają do Polski. Tutaj Szamil i Raszid zostają Europejczykami. Potem wyjeżdżają dalej na Zachód, gdzie zakładają rodziny. Po latach europejski raj zaczyna ich jednak przerażać obcością i duchową pustką. Wciąga ich święta wojna – wojna o wartości ich zdaniem największe. Tak trafiają do Syrii…Lara wciąż walczy o to, by wrócili do domu.
-Pozornie oderwane od siebie strony świata – „kontynent rosyjski” z jego strefą wpływów oraz bliskowschodni kalifat – okazują się ściśle związane. Wojciech Jagielski opisuje, jak na ich styku rodzi się fundamentalizm. Tak wygląda świat, kiedy wojna przychodzi do naszego domu.
-To kolejna po „Nocnych wędrowcach” i „Wypalaniu traw” wciągająca opowieść, której sens wykracza poza wydarzenia w niej opisywane i która pozbawia nas komfortu stereotypowego myślenia.
-[Znak, 2015]"
                 android:textColor="?android:attr/textColorPrimary" />
         </LinearLayout>
     </ScrollView>

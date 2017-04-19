@@ -1,4 +1,4 @@
-package weeia.isbnapp;
+package weeia.isbnapp.activities;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -10,7 +10,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.View;
 
+import weeia.isbnapp.R;
+import weeia.isbnapp.book.info.BookInfo;
+import weeia.isbnapp.book.info.BookInfoTest;
+
 public class BookDetailsActivity extends AppCompatActivity {
+    public BookInfo bookInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,16 +28,18 @@ public class BookDetailsActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Książka została dodana do półki", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, R.string.added_to_library, Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        bookInfo = new BookInfoTest("Wszystkie wojny Lary");
+
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
-        tabLayout.addTab(tabLayout.newTab().setText("Informacje"));
-        tabLayout.addTab(tabLayout.newTab().setText("Opinie"));
-        tabLayout.addTab(tabLayout.newTab().setText("Oferty"));
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.information_tab));
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.opinions_tab));
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.price_tab));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
@@ -40,22 +47,6 @@ public class BookDetailsActivity extends AppCompatActivity {
                 (getSupportFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                viewPager.setCurrentItem(tab.getPosition());
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
     }
 
     @Override
@@ -64,5 +55,4 @@ public class BookDetailsActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
-
 }
