@@ -46,7 +46,7 @@ public class RegisterActivity extends AppCompatActivity implements  RegisterView
     }
 
     @Override
-    public void setWrongDataError() {
+    public void makeWrongDataToast() {
         Toast.makeText(RegisterActivity.this, "Ops! Something went wrong with passed data. Try again.", Toast.LENGTH_SHORT).show();
     }
 

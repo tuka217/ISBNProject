@@ -32,7 +32,7 @@ public class RegisterPresenter implements RegisterPresenterInterface, RegisterIn
 
     @Override public void onError() {
         if (registerView != null) {
-            registerView.setWrongDataError();
+            registerView.makeWrongDataToast();
             registerView.hideProgress();
         }
     }

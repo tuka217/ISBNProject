@@ -19,4 +19,13 @@
     <string name="read_on">Czytaj na </string>
 
     <string name="added_to_library">Książka została dodana do półki</string>
+    <string name="read_on_biblionetka">Czytaj na BiblioNetka.pl</string>
+    <string name="read_on_lubimyczytac">Czytaj na LubimyCzytac.pl</string>
+
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Password</string>
+    <string name="btn_login">Log in</string>
+    <string name="btn_link_to_login">Log in</string>
+    <string name="btn_link_to_register">Register</string>
+    <string name="btn_register">Register</string>
 </resources>
