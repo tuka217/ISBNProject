@@ -41,10 +41,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/code_bar_tmp"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp" />
+        android:layout_marginEnd="8dp"
+        tools:layout_editor_absoluteY="16dp"
+        tools:layout_editor_absoluteX="328dp" />
 
 </android.support.constraint.ConstraintLayout>
