@@ -1,23 +1,24 @@
 package weeia.isbnapp.api.model;
 
 /**
- * Created by Anna on 2017-04-21.
+ * Created by Anna on 2017-05-05.
  */
-public class User {
 
+public class LoginRequest
+{
     private String Username;
     private String Password;
 
-    public User(String userName, String password) {
+    public LoginRequest(String userName, String password) {
         this.Username = userName;
         this.Password = password;
     }
-
     public String getPassword() {
         return this.Password;
     }
 
-    public String getUsername() {
+    public String getUsername()
+    {
         return this.Username;
     }
 
@@ -28,4 +29,5 @@ public class User {
     public void setPassword(String password) {
         this.Password = password;
     }
+
 }

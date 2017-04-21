@@ -8,7 +8,7 @@ public interface RegisterViewInterface {
 
     void hideProgress();
 
-    void setWrongDataError();
+    void makeWrongDataToast();
 
     void makeSuccessToast();
 }
