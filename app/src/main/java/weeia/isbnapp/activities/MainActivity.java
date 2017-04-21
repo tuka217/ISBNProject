@@ -9,11 +9,14 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import weeia.isbnapp.R;
 import weeia.isbnapp.activities.BookDetailsActivity;
 
 public class MainActivity extends AppCompatActivity {
+
+    TextView titleOrISBN;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,11 +25,16 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        ImageButton searchButton = (ImageButton) findViewById(R.id.searchButton);
+        final ImageButton searchButton = (ImageButton) findViewById(R.id.searchButton);
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view){
+                titleOrISBN = (TextView) findViewById(R.id.titleOrISBN);
+
                 Intent startIntent = new Intent(getApplicationContext(),BookDetailsActivity.class);
+                Bundle b = new Bundle();
+                b.putString("titleOrISBN", titleOrISBN.getText().toString());
+                startIntent.putExtras(b);
                 startActivity(startIntent);
             }
         });

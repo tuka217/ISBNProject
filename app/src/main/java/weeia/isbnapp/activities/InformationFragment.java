@@ -21,12 +21,11 @@ public class InformationFragment extends Fragment {
     private TextView form;
     private TextView publisherNote;
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_information, container, false);
         initializeInfoFields(view);
-        fillInfoFields(view);
+        fillInfoFields();
         return view;
     }
 
@@ -41,7 +40,7 @@ public class InformationFragment extends Fragment {
         publisherNote = (TextView) view.findViewById(R.id.publisher_note);
     }
 
-    private void fillInfoFields(View view){
+    private void fillInfoFields(){
         title.setText(((BookDetailsActivity) this.getActivity()).bookInfo.getTitle());
         author.setText(((BookDetailsActivity) this.getActivity()).bookInfo.getAuthor());
         originalLanguage.setText(((BookDetailsActivity) this.getActivity()).bookInfo.getOriginalLanguage());

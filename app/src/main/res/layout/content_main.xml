@@ -9,7 +9,7 @@
     tools:showIn="@layout/activity_main">
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/titleOrISBN"
         android:layout_width="0dp"
         android:layout_height="45dp"
         android:layout_marginLeft="8dp"

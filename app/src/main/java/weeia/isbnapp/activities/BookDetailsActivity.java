@@ -13,9 +13,12 @@ import android.view.View;
 import weeia.isbnapp.R;
 import weeia.isbnapp.book.info.BookInfo;
 import weeia.isbnapp.book.info.BookInfoTest;
+import weeia.isbnapp.book.opinions.BookOpinionsTest;
 
 public class BookDetailsActivity extends AppCompatActivity {
+
     public BookInfo bookInfo;
+    public BookOpinionsTest bookOpinionsTest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,8 +37,21 @@ public class BookDetailsActivity extends AppCompatActivity {
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        bookInfo = new BookInfoTest("Wszystkie wojny Lary");
 
+        Bundle b = getIntent().getExtras();
+        if(b != null) {
+            String bookTitleOrISBN = b.getString("titleOrISBN");
+            initializeBookClasses(bookTitleOrISBN);
+            initializeTabs();
+        }
+    }
+
+    private void initializeBookClasses(String bookTitleOrISBN){
+        bookInfo = new BookInfoTest(bookTitleOrISBN);
+        bookOpinionsTest = new BookOpinionsTest(bookTitleOrISBN);
+    }
+
+    private void initializeTabs(){
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         tabLayout.addTab(tabLayout.newTab().setText(R.string.information_tab));
         tabLayout.addTab(tabLayout.newTab().setText(R.string.opinions_tab));
