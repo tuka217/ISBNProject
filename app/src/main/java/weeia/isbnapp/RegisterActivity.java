@@ -1,0 +1,62 @@
+package weeia.isbnapp;
+
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.Toast;
+
+import weeia.isbnapp.presenter.RegisterPresenter;
+
+/**
+ * Created by Anna on 2017-04-18.
+ */
+public class RegisterActivity extends AppCompatActivity implements  RegisterViewInterface, View.OnClickListener{
+
+    private ProgressBar progressBar;
+    private EditText username;
+    private EditText password;
+    private RegisterPresenter presenter;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.register);
+
+        progressBar = (ProgressBar) findViewById(R.id.progress);
+        username = (EditText) findViewById(R.id.username);
+        password = (EditText) findViewById(R.id.password);
+        findViewById(R.id.btnRegister).setOnClickListener(this);
+
+        presenter = new RegisterPresenter(this);
+    }
+
+    @Override protected void onDestroy() {
+        presenter.onDestroy();
+        super.onDestroy();
+    }
+
+    @Override public void showProgress() {
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    @Override public void hideProgress() {
+        progressBar.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void setWrongDataError() {
+        Toast.makeText(RegisterActivity.this, "Ops! Something went wrong with passed data. Try again.", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void makeSuccessToast() {
+        Toast.makeText(RegisterActivity.this, "You were registered successfully.", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onClick(View v) {
+        presenter.validateCredentials(username.getText().toString(), password.getText().toString());
+    }
+}
