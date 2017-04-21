@@ -44,10 +44,10 @@ public class BackgroundService extends IntentService {
         try {
             Response<Offers> result = call.execute();
 
-            Intent RTReturn = new Intent(MainActivity.RECEIVE_JSON);
-            RTReturn.putExtra("json", result.body());
-
-            LocalBroadcastManager.getInstance(this).sendBroadcast(RTReturn);
+//            Intent RTReturn = new Intent(MainActivity.RECEIVE_JSON);
+//            RTReturn.putExtra("json", result.body());
+//
+//            LocalBroadcastManager.getInstance(this).sendBroadcast(RTReturn);
 
         } catch (IOException e) {
             Log.i("Retrofit", "Failure");

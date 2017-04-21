@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.ImageView;
@@ -34,6 +35,8 @@ import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import weeia.isbnapp.api.GoogleBooksApi;
+
 public class MainActivity extends AppCompatActivity {
 private Uri fileUri;
     @Override
@@ -51,7 +54,7 @@ private Uri fileUri;
                 startActivity(startIntent);
             }
         });
-        Button btn = (Button) findViewById(R.id.button);
+        ImageButton btn = (ImageButton) findViewById(R.id.imageButton3);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,22 +99,29 @@ private Uri fileUri;
             File imgFile = new  File(fileUri.getPath());
             if(imgFile.exists() && imgFile.canRead()) {
                 Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getPath());
-                //TextView txtView = (TextView) findViewById(R.id.txtContent);
                 BarcodeDetector detector =
                         new BarcodeDetector.Builder(getApplicationContext())
                                 .setBarcodeFormats(Barcode.ALL_FORMATS)
                                 .build();
                 if (!detector.isOperational()) {
-                    //txtView.setText("Could not set up the detector!");
                     return;
                 }
                 Frame frame = new Frame.Builder().setBitmap(myBitmap).build();
                 SparseArray<Barcode> barcodes = detector.detect(frame);
                 if (barcodes.size() > 0) {
                     Barcode thisCode = barcodes.valueAt(0);
-                   // txtView.setText(thisCode.rawValue);
+                    GoogleBooksApi api = new GoogleBooksApi();
+                    String bookTitle = api.GetBookTitleByISBN(thisCode.rawValue);
+                    if(bookTitle!=null)
+                    {
+                        EditText txt = (EditText) findViewById(R.id.editText);
+                        txt.setText("");
+                        txt.setText(bookTitle);
+                        Log.i("TAG", "bookTitle: "+bookTitle);
+                    }
+                    else
+                        Log.i("TAG","bookTitle not found");
                 } else {
-                   // txtView.setText("No barcodes recognized !");
                 }
             }
         }
