@@ -9,6 +9,7 @@ import java.util.concurrent.ExecutionException;
 
 import weeia.isbnapp.book.info.BookInfo;
 import weeia.isbnapp.book.info.BookInfoTest;
+import weeia.isbnapp.book.opinions.BookOpinion;
 import weeia.isbnapp.book.opinions.BookOpinionTest;
 import weeia.isbnapp.lbmodule.models.BookDetailsDto;
 import weeia.isbnapp.lbmodule.models.BookOpinionOpinionsPresenterDto;
@@ -17,7 +18,7 @@ import weeia.isbnapp.lbmodule.models.BookGeneralInfo;
 public class OpinionsPresenter implements   IOpinionsPresenter {
 
     @Override
-    public List<BookOpinionTest> ProvideOpinions(String bookName) throws ExecutionException, InterruptedException, MalformedURLException {
+    public List<BookOpinion> ProvideOpinions(String bookName) throws ExecutionException, InterruptedException, MalformedURLException {
         String url = new LbUrlBuilder()
                 .AnSuggesionUrl()
                 .WithBookName(bookName)
@@ -33,10 +34,10 @@ public class OpinionsPresenter implements   IOpinionsPresenter {
         return new GetLbBookInfoTask().execute(url,bookName).get();
     }
 
-    class GetLbOpinionsTask extends AsyncTask<String, Void, List<BookOpinionTest>> {
+    class GetLbOpinionsTask extends AsyncTask<String, Void, List<BookOpinion>> {
 
-        protected List<BookOpinionTest> doInBackground(String... params) {
-            List<BookOpinionTest> bookOpinionsList = new ArrayList<BookOpinionTest>();
+        protected List<BookOpinion> doInBackground(String... params) {
+            List<BookOpinion> bookOpinionsList = new ArrayList<BookOpinion>();
                 try {
                     ArrayList<BookOpinionOpinionsPresenterDto> bookOpinions = new ArrayList<>();
                     IContentProvider contentProvider = new CustomHttpClient(new URL(params[0]));
@@ -60,9 +61,9 @@ public class OpinionsPresenter implements   IOpinionsPresenter {
              return  bookOpinionsList;
             }
 
-            private  List<BookOpinionTest> Map(List<BookOpinionOpinionsPresenterDto> lista)
+            private  List<BookOpinion> Map(List<BookOpinionOpinionsPresenterDto> lista)
             {
-                List<BookOpinionTest> mappedList = new ArrayList<BookOpinionTest>();
+                List<BookOpinion> mappedList = new ArrayList<BookOpinion>();
                 for (BookOpinionOpinionsPresenterDto  item:lista ) {
                     mappedList.add(new BookOpinionTest("www.lubimyczytac.pl", item.opinionTitle, item.text, item.opinionPath, String.valueOf(item.rate), item.nick));
                 }
