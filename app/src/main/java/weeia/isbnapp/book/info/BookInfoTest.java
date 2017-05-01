@@ -16,17 +16,26 @@ public class BookInfoTest implements BookInfo {
     private final String publisherNote;
     private final String picturePath;
 
-    public BookInfoTest(String  bookTitleOrISBN){
-        title = "Wszystkie wojny Lary";
-        author = "Wojciech Jagielski";
-        originalLanguage = "polski";
-        originalTitle = "Wszystkie wojny Lary";;
-        yearOfFirsEdition = "2015";
-        category = "Literatura piękna";
-        genre = "literatura faktu";
-        form = "reportaż / zbiór reportaży";
-        publisherNote = "Opowieści słuchamy z ust Lary. Jej synowie, gruzińscy Czeczeni, ruszają do Polski. Tutaj Szamil i Raszid zostają Europejczykami. Potem wyjeżdżają dalej na Zachód, gdzie zakładają rodziny. Po latach europejski raj zaczyna ich jednak przerażać obcością i duchową pustką. Wciąga ich święta wojna – wojna o wartości ich zdaniem największe. Tak trafiają do Syrii…Lara wciąż walczy o to, by wrócili do domu. To kolejna po „Nocnych wędrowcach” i „Wypalaniu traw” wciągająca opowieść, której sens wykracza poza wydarzenia w niej opisywane i która pozbawia nas komfortu stereotypowego myślenia. [Znak, 2015]";
-        picturePath = "http://s.znak.com.pl/files/covers/card/b3/Jagielski_Lara_500pcx.jpg";
+    public BookInfoTest(String  title,
+                        String author,
+                        String originalLanguage,
+                        String originalTitle,
+                        String yearOfFirsEdition,
+                        String category,
+                        String  genre,
+                        String form,
+                        String publisherNote,
+                        String picturePath) {
+        this.title = title;
+        this.originalTitle = originalTitle;
+        this.originalLanguage = originalLanguage;
+        this.yearOfFirsEdition = yearOfFirsEdition;
+        this.genre = genre;
+        this.form = form;
+        this.author =author;
+        this.category =category;
+        this.publisherNote = publisherNote;
+        this.picturePath = picturePath;
     }
 
     public String getTitle(){

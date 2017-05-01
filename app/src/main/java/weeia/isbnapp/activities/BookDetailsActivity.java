@@ -18,6 +18,7 @@ import java.net.URL;
 import weeia.isbnapp.R;
 import weeia.isbnapp.book.info.BookInfo;
 import weeia.isbnapp.book.info.BookInfoTest;
+import weeia.isbnapp.book.info.BookInfoTestExample;
 import weeia.isbnapp.book.offers.BookOffersTest;
 import weeia.isbnapp.book.opinions.BookOpinionsTest;
 
@@ -44,7 +45,6 @@ public class BookDetailsActivity extends AppCompatActivity {
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
         Bundle b = getIntent().getExtras();
         if(b != null) {
             String bookTitleOrISBN = b.getString("titleOrISBN");
@@ -54,7 +54,7 @@ public class BookDetailsActivity extends AppCompatActivity {
     }
 
     private void initializeBookClasses(String bookTitleOrISBN){
-        bookInfo = new BookInfoTest(bookTitleOrISBN);
+        bookInfo = new BookInfoTestExample(bookTitleOrISBN);
         bookOpinionsTest = new BookOpinionsTest(bookTitleOrISBN);
         bookOffersTest = new BookOffersTest(bookTitleOrISBN);
     }
@@ -71,6 +71,22 @@ public class BookDetailsActivity extends AppCompatActivity {
                 (getSupportFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
     }
 
     @Override
