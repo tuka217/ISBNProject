@@ -1,5 +1,7 @@
 package weeia.isbnapp.activities;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -37,7 +39,7 @@ public class OpinionFragment extends Fragment {
         }
     }
 
-    private void addOpinionBoxToView(BookOpinion bookOpinion){
+    private void addOpinionBoxToView(final BookOpinion bookOpinion){
         LinearLayout opinionBox = (LinearLayout) View.inflate(getContext(), R.layout.opinion_box_template, null);
 
         ((TextView) opinionBox.getChildAt(0)).setText(bookOpinion.getOpinionTitle());
@@ -46,8 +48,19 @@ public class OpinionFragment extends Fragment {
         Button opinionRedirection = (Button) opinionBox.getChildAt(2);
         opinionRedirection.setText(opinionRedirection.getText() + " " + bookOpinion.getSourceSiteName());
 
+        opinionRedirection.setOnClickListener(new View.OnClickListener() {
+              @Override
+              public void onClick(View view) {
+                  Uri uri = Uri.parse(bookOpinion.getFullOpinionPath()); // missing 'http://' will cause crashed
+                  Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                  startActivity(intent);
+              }
+        });
+
         tabLayout.addView(opinionBox);
     }
+
+
 
     private void addGradesToView(){
         List<BookGrade> bookGrades = ((BookDetailsActivity) this.getActivity()).bookOpinionsTest.getBookGrades();

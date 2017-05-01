@@ -1,6 +1,8 @@
 package weeia.isbnapp.activities;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
@@ -10,15 +12,20 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.View;
 
+import java.io.InputStream;
+import java.net.URL;
+
 import weeia.isbnapp.R;
 import weeia.isbnapp.book.info.BookInfo;
 import weeia.isbnapp.book.info.BookInfoTest;
+import weeia.isbnapp.book.offers.BookOffersTest;
 import weeia.isbnapp.book.opinions.BookOpinionsTest;
 
 public class BookDetailsActivity extends AppCompatActivity {
 
     public BookInfo bookInfo;
     public BookOpinionsTest bookOpinionsTest;
+    public BookOffersTest bookOffersTest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +56,7 @@ public class BookDetailsActivity extends AppCompatActivity {
     private void initializeBookClasses(String bookTitleOrISBN){
         bookInfo = new BookInfoTest(bookTitleOrISBN);
         bookOpinionsTest = new BookOpinionsTest(bookTitleOrISBN);
+        bookOffersTest = new BookOffersTest(bookTitleOrISBN);
     }
 
     private void initializeTabs(){

@@ -7,5 +7,5 @@ import java.util.List;
  */
 
 public interface BookOffers {
-    public List<Offer> getOffers(String bookTitle);
+    List<Offer> getOffers();
 }

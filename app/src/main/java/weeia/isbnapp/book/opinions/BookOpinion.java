@@ -5,8 +5,8 @@ package weeia.isbnapp.book.opinions;
  */
 
 public interface BookOpinion {
-    public String getSourceSiteName();
-    public String getOpinionTitle();
-    public String getOpinionFragment();
-    public String getFullOpinionPath();
+    String getSourceSiteName();
+    String getOpinionTitle();
+    String getOpinionFragment();
+    String getFullOpinionPath();
 }
