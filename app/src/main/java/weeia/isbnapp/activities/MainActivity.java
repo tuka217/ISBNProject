@@ -16,7 +16,6 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import android.util.SparseArray;
-import android.util.Log;
 import android.graphics.BitmapFactory;
 import android.graphics.Bitmap;
 
@@ -32,7 +31,7 @@ import java.util.Date;
 import weeia.isbnapp.api.GoogleBooksApi;
 
 public class MainActivity extends AppCompatActivity {
-private Uri fileUri;
+    private Uri fileUri;
     TextView titleOrISBN;
 
     @Override
@@ -113,16 +112,13 @@ private Uri fileUri;
                     Barcode thisCode = barcodes.valueAt(0);
                     GoogleBooksApi api = new GoogleBooksApi();
                     String bookTitle = api.GetBookTitleByISBN(thisCode.rawValue);
+                    System.out.println(thisCode.rawValue);
                     if(bookTitle!=null)
                     {
-                        EditText txt = (EditText) findViewById(R.id.editText);
+                        EditText txt = (EditText) findViewById(R.id.titleOrISBN);
                         txt.setText("");
                         txt.setText(bookTitle);
-                        Log.i("TAG", "bookTitle: "+bookTitle);
                     }
-                    else
-                        Log.i("TAG","bookTitle not found");
-                } else {
                 }
             }
         }
