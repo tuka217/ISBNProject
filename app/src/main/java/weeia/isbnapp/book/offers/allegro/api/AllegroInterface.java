@@ -1,6 +1,4 @@
-package weeia.isbnapp.api;
-
-import java.util.List;
+package weeia.isbnapp.book.offers.allegro.api;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

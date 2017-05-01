@@ -1,4 +1,4 @@
-package weeia.isbnapp.background;
+package weeia.isbnapp.book.offers.allegro.background;
 
 import android.app.IntentService;
 import android.content.Intent;
@@ -13,9 +13,8 @@ import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import weeia.isbnapp.MainActivity;
-import weeia.isbnapp.api.AllegroInterface;
-import weeia.isbnapp.api.Offers;
+import weeia.isbnapp.book.offers.allegro.api.AllegroInterface;
+import weeia.isbnapp.book.offers.allegro.api.Offers;
 
 /**
  * Created by Anna on 2017-04-07.

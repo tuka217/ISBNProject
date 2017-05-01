@@ -1,4 +1,4 @@
-package weeia.isbnapp.api;
+package weeia.isbnapp.book.offers.allegro.api;
 
 import java.util.List;
 
