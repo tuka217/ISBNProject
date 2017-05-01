@@ -5,11 +5,12 @@ package weeia.isbnapp.book.offers;
  */
 
 public interface Offer {
-    public String getSourceName();
-    public String getUrl();
-    public String getName();
-    public Float getPrice();
-    public Float getBookAndShipmentPrice();
-    public String getCurrency();
-    public String getPicturePath();
+    String getSourceName();
+    String getUrl();
+    String getName();
+    String getCondition();
+    Float getPrice();
+    Float getBookAndShipmentPrice();
+    String getCurrency();
+    String getPicturePath();
 }

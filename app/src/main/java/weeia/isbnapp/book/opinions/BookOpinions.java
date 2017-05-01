@@ -7,6 +7,6 @@ import java.util.List;
  */
 
 public interface BookOpinions {
-    public List<BookOpinion> getBookOpinions();
-    public List<BookGrade> getBookGrades();
+    List<BookOpinion> getBookOpinions();
+    List<BookGrade> getBookGrades();
 }

@@ -5,14 +5,14 @@ package weeia.isbnapp.book.info;
  */
 
 public interface BookInfo {
-    public String getTitle();
-    public String getAuthor();
-    public String getOriginalLanguage();
-    public String getOriginalTitle();
-    public String getYearOfFirsEdition();
-    public String getCategory();
-    public String getGenre();
-    public String getForm();
-    public String getPublisherNote();
-    public String getPicturePath(); //in phone storage
+    String getTitle();
+    String getAuthor();
+    String getOriginalLanguage();
+    String getOriginalTitle();
+    String getYearOfFirsEdition();
+    String getCategory();
+    String getGenre();
+    String getForm();
+    String getPublisherNote();
+    String getPicturePath();
 }
