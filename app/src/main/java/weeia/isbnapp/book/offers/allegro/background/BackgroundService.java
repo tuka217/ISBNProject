@@ -1,4 +1,4 @@
-package weeia.isbnapp.background;
+package weeia.isbnapp.book.offers.allegro.background;
 
 import android.app.IntentService;
 import android.content.Intent;
@@ -13,9 +13,8 @@ import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import weeia.isbnapp.MainActivity;
-import weeia.isbnapp.api.AllegroInterface;
-import weeia.isbnapp.api.Offers;
+import weeia.isbnapp.book.offers.allegro.api.AllegroInterface;
+import weeia.isbnapp.book.offers.allegro.api.Offers;
 
 /**
  * Created by Anna on 2017-04-07.
@@ -23,7 +22,7 @@ import weeia.isbnapp.api.Offers;
 public class BackgroundService extends IntentService {
 
     private ResultReceiver resultReceiver;
-
+    public static final String RECEIVE_JSON = "com.your.package.RECEIVE_JSON";
     public BackgroundService() {
         super("BackgroundService");
     }
@@ -43,11 +42,11 @@ public class BackgroundService extends IntentService {
 
         try {
             Response<Offers> result = call.execute();
+            Intent RTReturn = new Intent(RECEIVE_JSON);
+            RTReturn.putExtra("json", result.body());
 
-//            Intent RTReturn = new Intent(MainActivity.RECEIVE_JSON);
-//            RTReturn.putExtra("json", result.body());
-//
-//            LocalBroadcastManager.getInstance(this).sendBroadcast(RTReturn);
+            LocalBroadcastManager.getInstance(this).sendBroadcast(RTReturn);
+
 
         } catch (IOException e) {
             Log.i("Retrofit", "Failure");

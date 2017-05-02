@@ -1,5 +1,5 @@
 
-package weeia.isbnapp;
+package weeia.isbnapp.activities;
 
 import android.net.Uri;
 import android.os.Environment;
@@ -14,31 +14,26 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.ImageView;
-import android.widget.Button;
-import android.view.View;
+
 import android.util.SparseArray;
-import android.util.Log;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.BitmapFactory;
 import android.graphics.Bitmap;
-import android.app.Activity;
+
+import weeia.isbnapp.R;
 
 import com.google.android.gms.vision.Frame;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
 import weeia.isbnapp.api.GoogleBooksApi;
 
 public class MainActivity extends AppCompatActivity {
-private Uri fileUri;
+    private Uri fileUri;
+    TextView titleOrISBN;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,11 +41,16 @@ private Uri fileUri;
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        ImageButton searchButton = (ImageButton) findViewById(R.id.searchButton);
+        final ImageButton searchButton = (ImageButton) findViewById(R.id.searchButton);
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view){
+                titleOrISBN = (TextView) findViewById(R.id.titleOrISBN);
+
                 Intent startIntent = new Intent(getApplicationContext(),BookDetailsActivity.class);
+                Bundle b = new Bundle();
+                b.putString("titleOrISBN", titleOrISBN.getText().toString());
+                startIntent.putExtras(b);
                 startActivity(startIntent);
             }
         });
@@ -112,16 +112,13 @@ private Uri fileUri;
                     Barcode thisCode = barcodes.valueAt(0);
                     GoogleBooksApi api = new GoogleBooksApi();
                     String bookTitle = api.GetBookTitleByISBN(thisCode.rawValue);
+                    System.out.println(thisCode.rawValue);
                     if(bookTitle!=null)
                     {
-                        EditText txt = (EditText) findViewById(R.id.editText);
+                        EditText txt = (EditText) findViewById(R.id.titleOrISBN);
                         txt.setText("");
                         txt.setText(bookTitle);
-                        Log.i("TAG", "bookTitle: "+bookTitle);
                     }
-                    else
-                        Log.i("TAG","bookTitle not found");
-                } else {
                 }
             }
         }
