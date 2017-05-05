@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -19,6 +20,7 @@ import android.util.SparseArray;
 import android.graphics.BitmapFactory;
 import android.graphics.Bitmap;
 
+import weeia.isbnapp.LoginActivity;
 import weeia.isbnapp.R;
 
 import com.google.android.gms.vision.Frame;
@@ -29,13 +31,16 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import weeia.isbnapp.api.GoogleBooksApi;
+import weeia.isbnapp.helper.SessionManager;
 
 public class MainActivity extends AppCompatActivity {
     private Uri fileUri;
     TextView titleOrISBN;
+    SessionManager session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -61,6 +66,23 @@ public class MainActivity extends AppCompatActivity {
                 dispatchTakePictureIntent();
             }
         });
+
+        //comment this to disable log out
+        session = new SessionManager(getApplicationContext());
+
+        Button logOutButton = (Button) findViewById(R.id.logOut);
+        logOutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view){
+                session.setLogin(false);
+                // Launch main activity
+                Intent intent = new Intent(MainActivity.this,
+                        LoginActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+        //end comment this
     }
 
     @Override
