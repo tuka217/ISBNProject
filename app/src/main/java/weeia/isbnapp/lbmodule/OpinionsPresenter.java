@@ -9,6 +9,7 @@ import java.util.concurrent.ExecutionException;
 
 import weeia.isbnapp.book.info.BookInfo;
 import weeia.isbnapp.book.info.BookInfoTest;
+import weeia.isbnapp.book.info.EmptyBookInfo;
 import weeia.isbnapp.book.opinions.BookOpinion;
 import weeia.isbnapp.book.opinions.BookOpinionTest;
 import weeia.isbnapp.lbmodule.models.BookDetailsDto;
@@ -52,7 +53,7 @@ public class OpinionsPresenter implements   IOpinionsPresenter {
                             .Build()));
                     bookOpinions.addAll(lbContentParser.GetBookOpinions(contentProvider));
                     bookOpinionsList = this.Map(bookOpinions);
-                    int i =10;
+
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 } catch (Exception e) {
@@ -74,26 +75,27 @@ public class OpinionsPresenter implements   IOpinionsPresenter {
     class GetLbBookInfoTask extends AsyncTask<String, Void, BookInfo> {
 
         protected BookInfo doInBackground(String... params) {
-            BookInfoTest bookInfo = null;
+            BookInfo bookInfo = new EmptyBookInfo();
             try {
 
                 IContentProvider contentProvider = new CustomHttpClient(new URL(params[0]));
                 LubimyCzytacContentParser lbContentParser = new LubimyCzytacContentParser();
 
-                BookGeneralInfo bookSmallInfoTemp = lbContentParser.GetBookInfo(contentProvider,params[1]);
+                BookGeneralInfo bookGeneralInfo = lbContentParser.GetBookInfo(contentProvider,params[1]);
                 contentProvider  = new CustomHttpClient(new URL(new LbUrlBuilder()
                         .ADetailBookPageUrl()
-                        .WithBookId(bookSmallInfoTemp.id)
+                        .WithBookId(bookGeneralInfo.id)
                         .Build()));
 
                 BookDetailsDto bookDetails = lbContentParser.GetBookDetails(contentProvider);
 
-                bookInfo = new BookInfoTest( bookSmallInfoTemp.title,bookSmallInfoTemp.authors,bookDetails.language,
+                bookInfo = new BookInfoTest( bookGeneralInfo.title,bookGeneralInfo.authors,bookDetails.language,
                         bookDetails.title, bookDetails.publishDate, bookDetails.category, bookDetails.category,
-                        bookDetails.category, bookDetails.description, bookSmallInfoTemp.coverUrl);
+                        bookDetails.category, bookDetails.description, bookGeneralInfo.coverUrl, Double.toString(bookDetails.rate));
 
             } catch (MalformedURLException e) {
                 e.printStackTrace();
+
             } catch (Exception e) {
                 e.printStackTrace();
             }

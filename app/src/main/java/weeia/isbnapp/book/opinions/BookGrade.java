@@ -5,7 +5,7 @@ package weeia.isbnapp.book.opinions;
  */
 
 public interface BookGrade {
-    Double getBookGrade();
-    Double getMaxGrade();
+    String getBookGrade();
+    String getMaxGrade();
     String getSourceSite();
 }
