@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -19,6 +20,7 @@ import android.util.SparseArray;
 import android.graphics.BitmapFactory;
 import android.graphics.Bitmap;
 
+import weeia.isbnapp.LoginActivity;
 import weeia.isbnapp.R;
 
 import com.google.android.gms.vision.Frame;
@@ -29,13 +31,16 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import weeia.isbnapp.api.GoogleBooksApi;
+import weeia.isbnapp.helper.SessionManager;
 
 public class MainActivity extends AppCompatActivity {
     private Uri fileUri;
     TextView titleOrISBN;
+    SessionManager session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -61,6 +66,9 @@ public class MainActivity extends AppCompatActivity {
                 dispatchTakePictureIntent();
             }
         });
+
+        //comment this to disable log out
+        session = new SessionManager(getApplicationContext());
     }
 
     @Override
@@ -82,8 +90,29 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
 
-        return super.onOptionsItemSelected(item);
+        switch (item.getItemId()) {
+            case R.id.action_library:
+                return true;
+            case R.id.action_settings:
+                return true;
+            case R.id.action_logOut:
+                this.logOut();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
+
+    private void logOut()
+    {
+        session.setLogin(false);
+        // Launch main activity
+        Intent intent = new Intent(MainActivity.this,
+                LoginActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
     static final int REQUEST_IMAGE_CAPTURE = 1;
     private void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
