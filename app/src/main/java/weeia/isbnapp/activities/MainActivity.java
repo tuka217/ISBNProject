@@ -1,6 +1,7 @@
 
 package weeia.isbnapp.activities;
 
+import android.app.AlertDialog;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -119,8 +120,17 @@ public class MainActivity extends AppCompatActivity {
                         txt.setText("");
                         txt.setText(bookTitle);
                     }
+                    else{
+                        showAlertDialog(R.string.ISBN_not_found, R.string.hint_try_to_search_title);
+                    }
+                }else{
+                    showAlertDialog(R.string.ISBN_not_recognized, R.string.hint_redo_photo);
                 }
+            }else{
+                showAlertDialog(R.string.Cannot_open_photo, R.string.hint_check_rights_to_open_photo);
             }
+        }else{
+            showAlertDialog(R.string.error_photo, R.string.hint_redo_photo);
         }
     }
     private static Uri getOutputMediaFileUri(){
@@ -137,6 +147,16 @@ public class MainActivity extends AppCompatActivity {
                 "IMG_"+ timeStamp + ".jpg");
         return mediaFile;
 
+    }
+
+    private void showAlertDialog(int messageTitle, int message){
+        AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(this);
+
+        dlgAlert.setMessage(message);
+        dlgAlert.setTitle(messageTitle);
+        dlgAlert.setPositiveButton("OK", null);
+        dlgAlert.setCancelable(true);
+        dlgAlert.create().show();
     }
 
 }
