@@ -69,20 +69,6 @@ public class MainActivity extends AppCompatActivity {
 
         //comment this to disable log out
         session = new SessionManager(getApplicationContext());
-
-        Button logOutButton = (Button) findViewById(R.id.logOut);
-        logOutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view){
-                session.setLogin(false);
-                // Launch main activity
-                Intent intent = new Intent(MainActivity.this,
-                        LoginActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-        //end comment this
     }
 
     @Override
@@ -104,8 +90,29 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
 
-        return super.onOptionsItemSelected(item);
+        switch (item.getItemId()) {
+            case R.id.action_library:
+                return true;
+            case R.id.action_settings:
+                return true;
+            case R.id.action_logOut:
+                this.logOut();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
+
+    private void logOut()
+    {
+        session.setLogin(false);
+        // Launch main activity
+        Intent intent = new Intent(MainActivity.this,
+                LoginActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
     static final int REQUEST_IMAGE_CAPTURE = 1;
     private void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);

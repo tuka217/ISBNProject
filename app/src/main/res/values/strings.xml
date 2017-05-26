@@ -2,7 +2,7 @@
     <string name="app_name">ISBNApp</string>
     <string name="action_settings">Opcje</string>
     <string name="library">Twoja półka</string>
-    <string name="login">Zaloguj</string>
+    <string name="logOut">Wyloguj</string>
     <string name="search_hint">Wpisz autora, tytuł lub ISBN</string>
     <string name="information_tab">Informacje</string>
     <string name="opinions_tab">Opinie</string>

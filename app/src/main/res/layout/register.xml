@@ -25,8 +25,8 @@
                     android:padding="10dp"
                     android:singleLine="true"
                     android:inputType="textCapWords"
-                    android:textColor="@color/colorPrimary"
-                    android:textColorHint="@color/white" />
+                    android:textColor="@color/input_login"
+                    android:textColorHint="@color/colorPrimary" />
 
                 <EditText
                     android:id="@+id/password"
@@ -48,7 +48,7 @@
                     android:layout_marginTop="20dip"
                     android:background="@color/input_login"
                     android:text="@string/btn_register"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/colorPrimary" />
 
                 <!-- Link to Login Screen -->
 

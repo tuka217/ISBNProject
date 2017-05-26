@@ -25,7 +25,7 @@
                     android:padding="10dp"
                     android:singleLine="true"
                     android:textColor="@color/input_login"
-                    android:textColorHint="@color/input_login_hint" />
+                    android:textColorHint="@color/colorPrimary" />
 
                 <EditText
                     android:id="@+id/password"
@@ -38,7 +38,7 @@
                     android:padding="10dp"
                     android:singleLine="true"
                     android:textColor="@color/input_login"
-                    android:textColorHint="@color/input_login_hint" />
+                    android:textColorHint="@color/colorPrimary" />
 
                 <!-- Login Button -->
 
