@@ -17,6 +17,7 @@ import java.util.Map;
 import weeia.isbnapp.lbmodule.models.BookDetailsDto;
 import weeia.isbnapp.lbmodule.models.BookOpinionOpinionsPresenterDto;
 import weeia.isbnapp.lbmodule.models.BookGeneralInfo;
+import weeia.isbnapp.lbmodule.models.BookSuggestion;
 
 public class LubimyCzytacContentParser implements  ILubimyCzytacContentProvider {
 
@@ -29,12 +30,12 @@ public BookGeneralInfo GetBookInfo(IContentProvider contentProvder,String bookNa
             try {
                 JSONObject c = json.getJSONObject(0);
                 String suggestedBookName = c.getString("title");
-                if(namesNotEqual(suggestedBookName, bookName)==true)
+                /*if(namesNotEqual(suggestedBookName, bookName)==true)
                 {
                     //TODO dorobic obsługe blędu braku takiej ksiazki
                     return  null;
-                }
-                String authors = parseAuthors(jParser, c.getString("authors"));
+                }*/
+                String authors = parseAuthors(jParser, c.getJSONArray("authors"));
                 bookSmallInfoTemp = new BookGeneralInfo(
                  c.getString("id"),
                  authors,
@@ -48,13 +49,62 @@ public BookGeneralInfo GetBookInfo(IContentProvider contentProvder,String bookNa
         return bookSmallInfoTemp;
     }
 
-    private String parseAuthors( JsonParser jParser, String authors) throws JSONException {
-        JSONArray authorsArray = jParser.parseJsonArray(authors);
+    public ArrayList<BookSuggestion> GetBookInfoWithManyReponses(IContentProvider contentProvder, String bookName) throws IOException, JSONException {
+
+        ArrayList<BookSuggestion> returnList = new
+                ArrayList<>();
+        JsonParser jParser = new JsonParser();
+        JSONArray json = jParser.parseJsonArrayWithManyReposnes(contentProvder.ProvideContent());
+      //  BookGeneralInfo bookSmallInfoTemp=null;
+        if(json.length()>= 1 ) {
+            try {
+                for(int i =0;i<json.length();i++){
+                    JSONObject c = json.getJSONObject(i);
+                    String category = c.getString("category");
+                    if(category.equals("book") ) {
+                        String suggestedBookName = c.getString("title");
+                        String url = c.getString("url");
+                        String cover = c.getString("cover");
+                        String rating = c.getString("rating");
+                        String  id = c.getString("id");
+                        String auhtors = parseAuthors(jParser,c.getJSONArray("authors"));
+                        BookSuggestion suggestion = new
+                                BookSuggestion(id,auhtors, suggestedBookName,cover,rating, url);
+                        returnList.add(suggestion);
+                    }
+                }
+
+
+                /*if(namesNotEqual(suggestedBookName, bookName)==true)
+                {
+                    //TODO dorobic obsługe blędu braku takiej ksiazki
+                    return  null;
+                }*/
+                /*String authors = parseAuthors(jParser, c.getString("authors"));
+                bookSmallInfoTemp = new BookGeneralInfo(
+                        c.getString("id"),
+                        authors,
+                        c.getString("title"),
+                        c.getString("cover"));
+                        */
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return returnList;
+    }
+
+    private String parseAuthors( JsonParser jParser, JSONArray authorsArray) throws JSONException {
+        //JSONArray authorsArray = jParser.parseJsonArray(authors);
+        if(authorsArray.length() ==0)
+            return "";
         StringBuilder authorsStringBuilder = new StringBuilder();
         for(int i =0;i<authorsArray.length();i++)
         {
             authorsStringBuilder.append(authorsArray.getJSONObject(i).getString("fullname") + ", ");
         }
+
         return authorsStringBuilder.toString().trim().substring(0,authorsStringBuilder.length()-2);
     }
 

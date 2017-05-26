@@ -33,6 +33,7 @@ import weeia.isbnapp.book.opinions.BookOpinion;
 import weeia.isbnapp.book.opinions.BookOpinionsTest;
 import weeia.isbnapp.lbmodule.IOpinionsPresenter;
 import weeia.isbnapp.lbmodule.OpinionsPresenter;
+import weeia.isbnapp.lbmodule.models.BookGeneralInfo;
 import weeia.isbnapp.lbmodule.models.BookOpinionOpinionsPresenterDto;
 
 public class BookDetailsActivity extends AppCompatActivity {
@@ -66,7 +67,9 @@ public class BookDetailsActivity extends AppCompatActivity {
         if(b != null) {
             try {
                 String bookTitleOrISBN = b.getString("titleOrISBN");
-                initializeBookClasses(bookTitleOrISBN);
+                BookGeneralInfo generalInfo = new BookGeneralInfo(b.getString("bookGeneralInfoId"),
+                        b.getString("bookGeneralInfoAuthors"),b.getString("bookGeneralInfoTitle"), b.getString("bookGeneralInfoCoverUrl"));
+                initializeBookClasses(bookTitleOrISBN,generalInfo);
             } catch (InterruptedException e) {
                 e.printStackTrace();
                 redirect();
@@ -87,13 +90,13 @@ public class BookDetailsActivity extends AppCompatActivity {
 
     }
 
-    private void initializeBookClasses(String bookTitleOrISBN) throws InterruptedException, ExecutionException, MalformedURLException {
-        bookInfo = presenter.ProvideBookInfo(bookTitleOrISBN);
+    private void initializeBookClasses(String bookTitleOrISBN, BookGeneralInfo bookGeneralInfo) throws InterruptedException, ExecutionException, MalformedURLException {
+        bookInfo = presenter.ProvideBookInfo(bookTitleOrISBN,bookGeneralInfo);
         if(bookInfo instanceof EmptyBookInfo)
         {
             redirect();
         }
-        List<BookOpinion> bookOpinions= presenter.ProvideOpinions(bookTitleOrISBN);
+        List<BookOpinion> bookOpinions= presenter.ProvideOpinions(bookTitleOrISBN,bookGeneralInfo);
         bookOpinionsTest = new BookOpinionsTest(bookTitleOrISBN);
         bookOpinionsTest.setBookOpinions(bookOpinions);
         bookOpinionsTest.addBookGrade(new BookGradeTest(bookInfo.getGrade(), bookInfo.getGrade(), "LubimyCzytać.pl"));
