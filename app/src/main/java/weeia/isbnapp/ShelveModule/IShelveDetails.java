@@ -14,11 +14,8 @@ import weeia.isbnapp.lbmodule.models.BookInfoLbDto;
 public interface IShelveDetails {
     List<BookInfoLbDto> getBooks();
     void putBookToShelve(BookInfoLbDto book);
-    BookInfoLbDto getBookDetailsById();
     void markBookAsRead(int bookId);
-    Date getCreateDate();
     void addOpinion(BookOpinion opinion, int bookId);
     void removeFromShelf(int bookId);
-    void Synchronize();
 
 }
