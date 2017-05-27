@@ -2,7 +2,7 @@
     <string name="app_name">ISBNApp</string>
     <string name="action_settings">Opcje</string>
     <string name="library">Twoja półka</string>
-    <string name="login">Zaloguj</string>
+    <string name="logOut">Wyloguj</string>
     <string name="search_hint">Wpisz autora, tytuł lub ISBN</string>
     <string name="information_tab">Informacje</string>
     <string name="opinions_tab">Opinie</string>
@@ -19,6 +19,7 @@
     <string name="read_on">Czytaj na </string>
 
     <string name="added_to_library">Książka została dodana do półki</string>
+
     <string name="ISBN_not_found">Numer ISBN nie został rozpoznany</string>
     <string name="ISBN_not_recognized">Nr ISBN nie został odczytany poprawnie</string>
     <string name="Cannot_open_photo">Brak dostępu do zdjęcia</string>
@@ -26,4 +27,14 @@
     <string name="hint_try_to_search_title">Spróbuj wpisać tytuł książki w wyszukiwarkę</string>
     <string name="hint_redo_photo">Spróbuj wykonać zdjęcie ponownie</string>
     <string name="hint_check_rights_to_open_photo">Sprawdź czy aplikacja ma dostęp do odczytu zdjęć (ustawienia)</string>
+    <string name="read_on_biblionetka">Czytaj na BiblioNetka.pl</string>
+    <string name="read_on_lubimyczytac">Czytaj na LubimyCzytac.pl</string>
+
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Password</string>
+    <string name="btn_login">Log in</string>
+    <string name="btn_link_to_login">Log in</string>
+    <string name="btn_link_to_register">Register</string>
+    <string name="btn_register">Register</string>
+
 </resources>

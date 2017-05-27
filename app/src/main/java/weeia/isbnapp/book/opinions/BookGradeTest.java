@@ -5,21 +5,22 @@ package weeia.isbnapp.book.opinions;
  */
 
 public class BookGradeTest implements BookGrade {
-    private final Double bookGrade;
-    private final Double maxGrade;
+    private final String bookGrade;
+    private final String maxGrade;
     private final String sourceSite;
 
-    public BookGradeTest(Double bookGrade, Double maxGrade, String sourceSite){
+    public BookGradeTest(String bookGrade, String maxGrade, String sourceSite){
+
         this.bookGrade = bookGrade;
         this.maxGrade = maxGrade;
         this.sourceSite = sourceSite;
     }
 
-    public Double getBookGrade(){
+    public String getBookGrade(){
         return bookGrade;
     }
 
-    public Double getMaxGrade(){
+    public String getMaxGrade(){
         return maxGrade;
     }
 
