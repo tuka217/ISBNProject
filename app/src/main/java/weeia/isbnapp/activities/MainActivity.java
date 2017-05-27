@@ -34,6 +34,7 @@ import weeia.isbnapp.api.GoogleBooksApi;
 public class MainActivity extends AppCompatActivity {
     private Uri fileUri;
     TextView titleOrISBN;
+    ImageButton searchButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        final ImageButton searchButton = (ImageButton) findViewById(R.id.searchButton);
+        searchButton = (ImageButton) findViewById(R.id.searchButton);
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view){
@@ -119,6 +120,7 @@ public class MainActivity extends AppCompatActivity {
                         EditText txt = (EditText) findViewById(R.id.titleOrISBN);
                         txt.setText("");
                         txt.setText(bookTitle);
+                        searchButton.callOnClick();
                     }
                     else{
                         showAlertDialog(R.string.ISBN_not_found, R.string.hint_try_to_search_title);
