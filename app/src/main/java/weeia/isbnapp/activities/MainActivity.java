@@ -22,6 +22,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Bitmap;
 import android.widget.Toast;
 
+import weeia.isbnapp.LoginActivity;
 import weeia.isbnapp.R;
 
 import com.google.android.gms.vision.Frame;
@@ -36,17 +37,20 @@ import java.util.Date;
 import java.util.concurrent.ExecutionException;
 
 import weeia.isbnapp.api.GoogleBooksApi;
-import weeia.isbnapp.book.info.BookInfo;
 import weeia.isbnapp.lbmodule.IOpinionsPresenter;
 import weeia.isbnapp.lbmodule.OpinionsPresenter;
 import weeia.isbnapp.lbmodule.models.BookSuggestion;
+import weeia.isbnapp.helper.SessionManager;
 
 public class MainActivity extends AppCompatActivity {
     private Uri fileUri;
     TextView titleOrISBN;
     public IOpinionsPresenter presenter;
+    SessionManager session;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -87,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
                 dispatchTakePictureIntent();
             }
         });
+
         proposedBookListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
@@ -103,6 +108,10 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(startIntent);
             }
         });
+
+
+        //comment this to disable log out
+        session = new SessionManager(getApplicationContext());
     }
 
     @Override
@@ -124,8 +133,29 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
 
-        return super.onOptionsItemSelected(item);
+        switch (item.getItemId()) {
+            case R.id.action_library:
+                return true;
+            case R.id.action_settings:
+                return true;
+            case R.id.action_logOut:
+                this.logOut();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
+
+    private void logOut()
+    {
+        session.setLogin(false);
+        // Launch main activity
+        Intent intent = new Intent(MainActivity.this,
+                LoginActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
     static final int REQUEST_IMAGE_CAPTURE = 1;
     private void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);

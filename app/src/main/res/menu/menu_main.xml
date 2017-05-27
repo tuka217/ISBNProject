@@ -8,9 +8,9 @@
         android:title="@string/library"
         app:showAsAction="never" />
     <item
-        android:id="@+id/action_login"
+        android:id="@+id/action_logOut"
         android:orderInCategory="100"
-        android:title="@string/login"
+        android:title="@string/logOut"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_settings"
