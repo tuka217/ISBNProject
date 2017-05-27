@@ -1,6 +1,7 @@
 
 package weeia.isbnapp.activities;
 
+import android.app.AlertDialog;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -45,6 +46,7 @@ import weeia.isbnapp.helper.SessionManager;
 public class MainActivity extends AppCompatActivity {
     private Uri fileUri;
     TextView titleOrISBN;
+    ImageButton searchButton;
     public IOpinionsPresenter presenter;
     SessionManager session;
 
@@ -57,9 +59,8 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         final ListView proposedBookListView = (ListView) findViewById(R.id.proposed_books_listview);
 
-        final ImageButton searchButton = (ImageButton) findViewById(R.id.searchButton);
+        searchButton = (ImageButton) findViewById(R.id.searchButton);
         presenter = new OpinionsPresenter();
-
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view){
@@ -190,9 +191,19 @@ public class MainActivity extends AppCompatActivity {
                         EditText txt = (EditText) findViewById(R.id.titleOrISBN);
                         txt.setText("");
                         txt.setText(bookTitle);
+                        searchButton.callOnClick();
                     }
+                    else{
+                        showAlertDialog(R.string.ISBN_not_found, R.string.hint_try_to_search_title);
+                    }
+                }else{
+                    showAlertDialog(R.string.ISBN_not_recognized, R.string.hint_redo_photo);
                 }
+            }else{
+                showAlertDialog(R.string.Cannot_open_photo, R.string.hint_check_rights_to_open_photo);
             }
+        }else{
+            showAlertDialog(R.string.error_photo, R.string.hint_redo_photo);
         }
     }
     private static Uri getOutputMediaFileUri(){
@@ -209,6 +220,16 @@ public class MainActivity extends AppCompatActivity {
                 "IMG_"+ timeStamp + ".jpg");
         return mediaFile;
 
+    }
+
+    private void showAlertDialog(int messageTitle, int message){
+        AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(this);
+
+        dlgAlert.setMessage(message);
+        dlgAlert.setTitle(messageTitle);
+        dlgAlert.setPositiveButton("OK", null);
+        dlgAlert.setCancelable(true);
+        dlgAlert.create().show();
     }
 
 }
