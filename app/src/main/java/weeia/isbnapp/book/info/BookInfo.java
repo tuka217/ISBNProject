@@ -15,4 +15,5 @@ public interface BookInfo {
     String getForm();
     String getPublisherNote();
     String getPicturePath();
+    String getGrade();
 }

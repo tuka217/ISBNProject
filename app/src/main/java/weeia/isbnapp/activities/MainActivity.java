@@ -11,14 +11,16 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import android.util.SparseArray;
 import android.graphics.BitmapFactory;
 import android.graphics.Bitmap;
+import android.widget.Toast;
 
 import weeia.isbnapp.LoginActivity;
 import weeia.isbnapp.R;
@@ -28,14 +30,22 @@ import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
 
 import java.io.File;
+import java.net.MalformedURLException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.concurrent.ExecutionException;
+
 import weeia.isbnapp.api.GoogleBooksApi;
+import weeia.isbnapp.lbmodule.IOpinionsPresenter;
+import weeia.isbnapp.lbmodule.OpinionsPresenter;
+import weeia.isbnapp.lbmodule.models.BookSuggestion;
 import weeia.isbnapp.helper.SessionManager;
 
 public class MainActivity extends AppCompatActivity {
     private Uri fileUri;
     TextView titleOrISBN;
+    public IOpinionsPresenter presenter;
     SessionManager session;
 
     @Override
@@ -45,18 +55,33 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        final ListView proposedBookListView = (ListView) findViewById(R.id.proposed_books_listview);
 
         final ImageButton searchButton = (ImageButton) findViewById(R.id.searchButton);
+        presenter = new OpinionsPresenter();
+
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view){
                 titleOrISBN = (TextView) findViewById(R.id.titleOrISBN);
 
-                Intent startIntent = new Intent(getApplicationContext(),BookDetailsActivity.class);
-                Bundle b = new Bundle();
-                b.putString("titleOrISBN", titleOrISBN.getText().toString());
-                startIntent.putExtras(b);
-                startActivity(startIntent);
+
+                presenter = new OpinionsPresenter();
+                ListViewAdapter listViewAdapter = null;
+                try {
+                    ArrayList<BookSuggestion> suggestions = presenter.ProvideBookSuggestion(titleOrISBN.getText().toString());
+                    listViewAdapter = new ListViewAdapter(getBaseContext(),suggestions);
+                    proposedBookListView.setAdapter(listViewAdapter);
+                    if(suggestions.size()==0)
+                        Toast.makeText(getApplication(),"No such book found",Toast.LENGTH_SHORT);
+                }catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+                proposedBookListView.setAdapter(listViewAdapter);
             }
         });
         ImageButton btn = (ImageButton) findViewById(R.id.imageButton3);
@@ -66,6 +91,24 @@ public class MainActivity extends AppCompatActivity {
                 dispatchTakePictureIntent();
             }
         });
+
+        proposedBookListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                Object item = parent.getItemAtPosition(position);
+                BookSuggestion suggestion = (BookSuggestion)item;
+                Intent startIntent = new Intent(getApplicationContext(),BookDetailsActivity.class);
+                Bundle b = new Bundle();
+                b.putString("titleOrISBN", titleOrISBN.getText().toString());
+                b.putString("bookGeneralInfoId", suggestion.id.toString());
+                b.putString("bookGeneralInfoAuthors", suggestion.authors.toString());
+                b.putString("bookGeneralInfoTitle", suggestion.title.toString());
+                b.putString("bookGeneralInfoCoverUrl", suggestion.coverUrl.toString());
+                startIntent.putExtras(b);
+                startActivity(startIntent);
+            }
+        });
+
 
         //comment this to disable log out
         session = new SessionManager(getApplicationContext());

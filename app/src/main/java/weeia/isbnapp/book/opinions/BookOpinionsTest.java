@@ -20,8 +20,8 @@ public class BookOpinionsTest implements BookOpinions {
 
     private void downloadBookGrades(){
         bookGrades = new ArrayList<>();
-        bookGrades.add(new BookGradeTest(4.99, 6.0, "BiblioNetka.pl"));
-        bookGrades.add(new BookGradeTest(7.9, 10.0, "LubimyCzytać.pl"));
+        bookGrades.add(new BookGradeTest("4.99", "6.0", "BiblioNetka.pl"));
+        bookGrades.add(new BookGradeTest("7.9", "10.0", "LubimyCzytać.pl"));
     }
 
     private void downloadBookOpinions(){
@@ -35,7 +35,19 @@ public class BookOpinionsTest implements BookOpinions {
     public List<BookOpinion> getBookOpinions(){
         return bookOpinions;
     }
+    public void setBookOpinions(List<BookOpinion> _bookOpinions ){
+         bookOpinions = _bookOpinions;
+    }
+    public void setBookGrades(List<BookGrade> _bookGrades)
+    {
+        bookGrades = _bookGrades;
+    }
     public List<BookGrade> getBookGrades(){
         return bookGrades;
+    }
+
+    @Override
+    public void addBookGrade(BookGrade _grade) {
+        bookGrades.add(_grade);
     }
 }
