@@ -1,6 +1,8 @@
 package weeia.isbnapp.lbmodule;
 
 import android.os.AsyncTask;
+
+import java.lang.reflect.Array;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -9,41 +11,53 @@ import java.util.concurrent.ExecutionException;
 
 import weeia.isbnapp.book.info.BookInfo;
 import weeia.isbnapp.book.info.BookInfoTest;
+import weeia.isbnapp.book.info.EmptyBookInfo;
 import weeia.isbnapp.book.opinions.BookOpinion;
 import weeia.isbnapp.book.opinions.BookOpinionTest;
 import weeia.isbnapp.lbmodule.models.BookDetailsDto;
 import weeia.isbnapp.lbmodule.models.BookOpinionOpinionsPresenterDto;
 import weeia.isbnapp.lbmodule.models.BookGeneralInfo;
+import weeia.isbnapp.lbmodule.models.BookSuggestion;
 
 public class OpinionsPresenter implements   IOpinionsPresenter {
 
     @Override
-    public List<BookOpinion> ProvideOpinions(String bookName) throws ExecutionException, InterruptedException, MalformedURLException {
+    public List<BookOpinion> ProvideOpinions(String bookName,BookGeneralInfo bookGeneralInfo) throws ExecutionException, InterruptedException, MalformedURLException {
         String url = new LbUrlBuilder()
                 .AnSuggesionUrl()
                 .WithBookName(bookName)
                 .Build();
-        return new GetLbOpinionsTask().execute(url,bookName).get();
+        return new GetLbOpinionsTask().execute(url,bookName,bookGeneralInfo).get();
     }
 
-    public BookInfo ProvideBookInfo(String bookName) throws ExecutionException, InterruptedException, MalformedURLException {
+    public BookInfo ProvideBookInfo(String bookName,BookGeneralInfo bookGeneralInfo) throws ExecutionException, InterruptedException, MalformedURLException {
         String url = new LbUrlBuilder()
                 .AnSuggesionUrl()
                 .WithBookName(bookName)
                 .Build();
-        return new GetLbBookInfoTask().execute(url,bookName).get();
+        return new GetLbBookInfoTask().execute(url,bookName,bookGeneralInfo).get();
     }
 
-    class GetLbOpinionsTask extends AsyncTask<String, Void, List<BookOpinion>> {
+    @Override
+    public ArrayList<BookSuggestion> ProvideBookSuggestion(String bookName) throws ExecutionException, InterruptedException, MalformedURLException {
+        String url = new LbUrlBuilder()
+                .AnSuggesionUrl()
+                .WithBookName(bookName)
+                .Build();
+        ArrayList<BookSuggestion> suggestions = new GetLbBookInfoTaskWithManyBooks().execute(url,bookName).get();
+        return suggestions;
+    }
 
-        protected List<BookOpinion> doInBackground(String... params) {
+    class GetLbOpinionsTask extends AsyncTask<Object, Void, List<BookOpinion>> {
+
+        protected List<BookOpinion> doInBackground(Object... params) {
             List<BookOpinion> bookOpinionsList = new ArrayList<BookOpinion>();
                 try {
                     ArrayList<BookOpinionOpinionsPresenterDto> bookOpinions = new ArrayList<>();
-                    IContentProvider contentProvider = new CustomHttpClient(new URL(params[0]));
+                    IContentProvider contentProvider = new CustomHttpClient(new URL((String)params[0]));
                     LubimyCzytacContentParser lbContentParser = new LubimyCzytacContentParser();
 
-                    BookGeneralInfo bookSmallInfoTemp = lbContentParser.GetBookInfo(contentProvider,params[1]);
+                    BookGeneralInfo bookSmallInfoTemp = (BookGeneralInfo)params[2];
 
                     contentProvider = new CustomHttpClient(new URL(new LbUrlBuilder()
                             .ABookReviewUrl()
@@ -52,7 +66,7 @@ public class OpinionsPresenter implements   IOpinionsPresenter {
                             .Build()));
                     bookOpinions.addAll(lbContentParser.GetBookOpinions(contentProvider));
                     bookOpinionsList = this.Map(bookOpinions);
-                    int i =10;
+
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 } catch (Exception e) {
@@ -71,33 +85,57 @@ public class OpinionsPresenter implements   IOpinionsPresenter {
             }
         }
 
-    class GetLbBookInfoTask extends AsyncTask<String, Void, BookInfo> {
+    class GetLbBookInfoTask extends AsyncTask<Object, Void, BookInfo> {
 
-        protected BookInfo doInBackground(String... params) {
-            BookInfoTest bookInfo = null;
+        protected BookInfo doInBackground(Object... params) {
+            BookInfo bookInfo = new EmptyBookInfo();
             try {
 
-                IContentProvider contentProvider = new CustomHttpClient(new URL(params[0]));
+                IContentProvider contentProvider;
                 LubimyCzytacContentParser lbContentParser = new LubimyCzytacContentParser();
 
-                BookGeneralInfo bookSmallInfoTemp = lbContentParser.GetBookInfo(contentProvider,params[1]);
+                //BookGeneralInfo bookGeneralInfo = lbContentParser.GetBookInfo(contentProvider,params[1]);
+
+                BookGeneralInfo bookGeneralInfo = BookGeneralInfo.class.cast(params[2]);
                 contentProvider  = new CustomHttpClient(new URL(new LbUrlBuilder()
                         .ADetailBookPageUrl()
-                        .WithBookId(bookSmallInfoTemp.id)
+                        .WithBookId(bookGeneralInfo.id)
                         .Build()));
 
                 BookDetailsDto bookDetails = lbContentParser.GetBookDetails(contentProvider);
 
-                bookInfo = new BookInfoTest( bookSmallInfoTemp.title,bookSmallInfoTemp.authors,bookDetails.language,
+                bookInfo = new BookInfoTest( bookGeneralInfo.title,bookGeneralInfo.authors,bookDetails.language,
                         bookDetails.title, bookDetails.publishDate, bookDetails.category, bookDetails.category,
-                        bookDetails.category, bookDetails.description, bookSmallInfoTemp.coverUrl);
-
+                        bookDetails.category, bookDetails.description, bookGeneralInfo.coverUrl, Double.toString(bookDetails.rate));
+                return  bookInfo;
             } catch (MalformedURLException e) {
                 e.printStackTrace();
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
             return  bookInfo;
+        }
+
+    }
+
+
+    class GetLbBookInfoTaskWithManyBooks extends AsyncTask<String, Void,  ArrayList<BookSuggestion>> {
+
+        protected  ArrayList<BookSuggestion> doInBackground(String... params) {
+            ArrayList<BookSuggestion> suggestions = new ArrayList<>();
+            try {
+
+                IContentProvider contentProvider = new CustomHttpClient(new URL(params[0]));
+                LubimyCzytacContentParser lbContentParser = new LubimyCzytacContentParser();
+                suggestions.addAll(lbContentParser.GetBookInfoWithManyReponses(contentProvider,params[1]));
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return  suggestions;
         }
 
     }

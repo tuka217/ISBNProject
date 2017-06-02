@@ -9,4 +9,6 @@ import java.util.List;
 public interface BookOpinions {
     List<BookOpinion> getBookOpinions();
     List<BookGrade> getBookGrades();
+
+    void addBookGrade(BookGrade _grade);
 }

@@ -15,6 +15,7 @@ public class BookInfoTest implements BookInfo {
     private final String form;
     private final String publisherNote;
     private final String picturePath;
+    private final String grade;
 
     public BookInfoTest(String  title,
                         String author,
@@ -25,7 +26,8 @@ public class BookInfoTest implements BookInfo {
                         String  genre,
                         String form,
                         String publisherNote,
-                        String picturePath) {
+                        String picturePath,
+                        String grade) {
         this.title = title;
         this.originalTitle = originalTitle;
         this.originalLanguage = originalLanguage;
@@ -36,6 +38,7 @@ public class BookInfoTest implements BookInfo {
         this.category =category;
         this.publisherNote = publisherNote;
         this.picturePath = picturePath;
+        this.grade= grade;
     }
 
     public String getTitle(){
@@ -67,5 +70,10 @@ public class BookInfoTest implements BookInfo {
     }
     public String getPicturePath(){
         return picturePath;
+    }
+
+    @Override
+    public String getGrade() {
+        return grade;
     }
 }
