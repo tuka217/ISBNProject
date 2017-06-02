@@ -1,6 +1,8 @@
 
 package weeia.isbnapp.activities;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.app.AlertDialog;
 import android.net.Uri;
 import android.os.Environment;
@@ -132,6 +134,10 @@ public class MainActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        }
+        else if(id == R.id.action_library) {
+            Intent startIntent = new Intent(getApplicationContext(),ShelveFragment.class);
+            startActivity(startIntent);
         }
 
         switch (item.getItemId()) {

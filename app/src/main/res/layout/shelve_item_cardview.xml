@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingBottom="10dp">
+
+    <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/cv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/wallet_dim_foreground_disabled_holo_dark" >
+
+        <android.support.percent.PercentRelativeLayout
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="230dp">
+
+            <ImageView
+                android:id="@+id/picture"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginRight="0dp"
+                app:layout_widthPercent="40%"
+                app:layout_heightPercent="50%"
+                android:layout_alignParentBottom="true"
+                android:paddingRight="8dp"
+                />
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="20dp"
+                android:layout_toRightOf="@+id/picture"
+                android:textAppearance="@android:style/TextAppearance.Material.Medium"
+                android:textSize="30sp"
+                />
+
+            <TextView
+                android:id="@+id/author"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/title"
+                android:layout_toRightOf="@+id/picture"
+                android:textAppearance="@android:style/TextAppearance.Material.Medium"
+                />
+
+
+            <TextView
+                android:id="@+id/issueYear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/author"
+                android:layout_toRightOf="@+id/picture"
+                android:textAppearance="@android:style/TextAppearance.Material.Medium"/>
+
+            <TextView
+                android:id="@+id/isRead"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/issueYear"
+                android:layout_toRightOf="@+id/picture"
+                android:textAppearance="@android:style/TextAppearance.Material.Medium"/>
+            <TextView
+                android:id="@+id/createDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/isRead"
+                android:layout_toRightOf="@+id/picture"
+                android:textAppearance="@android:style/TextAppearance.Material.Medium"/>
+        </android.support.percent.PercentRelativeLayout>
+    </android.support.v7.widget.CardView>
+</LinearLayout>
