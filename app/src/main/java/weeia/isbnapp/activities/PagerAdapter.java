@@ -22,6 +22,9 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
             case 1:
                 OpinionFragment opinionFragment = new OpinionFragment();
                 return opinionFragment;
+            case 2:
+                PricesFragment pricesFragment = new PricesFragment();
+                return pricesFragment;
             default:
                 return null;
         }
